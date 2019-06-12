@@ -1,11 +1,22 @@
+const context = require('./context');
+
+function getChannel() {
+    return Context.getChannel();
+}
+
 module.exports = (async function() {
-    const connection = await require('amqplib').connect('amqp://node:node@192.168.137.1');
-    const q = 'task';
-    const ch = await connection.createChannel();
-    
+    const ctx = await context;
+    const ch = ctx.getChannel();
+
     return {
-        publish: function(message) {
-            ch.publish('exchange', q, Buffer.from(message));
+        publish: async function(message) {
+            if (!ch) {
+                return Promise.reject(new Error('Channel is undefined'));
+            }
+
+            await ch.assertExchange(ctx.exchange);
+            await ch.assertQueue(ctx.q);
+            ch.publish(ctx.exchange, ctx.q, Buffer.from(message));
         },
         close: function() {
             ch.close(() => {

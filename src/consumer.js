@@ -1,13 +1,13 @@
-import DataService from './DataService';
+const context = require('./context');
+// import DataService from './DataService';
 
-module.exports = (async function() {
-    const q = 'task';
-    const connection = await require('amqplib').connect('amqp://node:node@192.168.137.1');
-    const ch = await connection.createChannel();
-    await ch.assertQueue(q);
-    ch.bindQueue(q, 'exchange', q);
-    ch.consume(q, (message) => {
-        DataService.insert(message.content.toString());
+module.exports = (async function () {
+    const ctx = await context;
+    const ch = ctx.getChannel();
+    await ch.assertQueue(ctx.q);
+    ch.bindQueue(ctx.q, ctx.exchange, ctx.q);
+    ch.consume(ctx.q, (message) => {
+        // console.log(message.content.toString());
         ch.ack(message);
     });
 })();
