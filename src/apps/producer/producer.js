@@ -1,4 +1,4 @@
-const context = require('../../context');
+const context = require('../common/context');
 
 function getChannel() {
     return Context.getChannel();

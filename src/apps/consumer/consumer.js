@@ -1,4 +1,4 @@
-const context = require('../../context');
+const context = require('../common/context');
 // import DataService from './DataService';
 
 module.exports = (async function () {

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./example/server.js --exec babel-node --ignore ./test/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-producer": "nodemon ./src/app2/index.js --exec babel-node --ignore ./test/",
+    "test": "jest --config jest.config.js"
   },
   "author": "",
   "license": "ISC",
