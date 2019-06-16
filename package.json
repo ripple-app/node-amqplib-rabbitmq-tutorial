@@ -4,8 +4,12 @@
   "description": "sender-receiver nodejs and rabbitmq",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./example/server.js --exec babel-node --ignore ./test/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start ./pm2/config.json",
+    "start-producer": "nodemon ./example/producer.js --exec babel-node --ignore ./test/",
+    "start-consumer": "nodemon ./example/consumer.js --exec babel-node --ignore ./test/",
+    "test": "jest --config jest.config.js",
+    "lint": "eslint --cache ./",
+    "stop": "pm2 delete ./pm2/config.json"
   },
   "author": "",
   "license": "ISC",
