@@ -14,4 +14,8 @@ export class Connection {
     channelAssertQueue(channel, queueName) {
         return channel.assertQueue(queueName);
     }
+
+    channelBindQueue(channel, exchange, queueName) {
+        return channel.bindQueue(queueName, exchange, queueName);
+    }
 }

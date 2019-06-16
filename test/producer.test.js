@@ -1,15 +1,12 @@
-import { Producer } from '../src/app2/Producer';
-// import {Channel} from '../src/Channel';
-/**
- * Queue에 메세지를 넣는다. (publish)
- */
+import { Producer } from '../src/producer/Producer';
+
 describe('Producer', () => {
     let producer;
     let channel;
 
     beforeEach(() => {
-        jest.mock('../src/app2/Channel');
-        const {Channel} = require('../src/app2/Channel');
+        jest.mock('../src/Channel');
+        const {Channel} = require('../src/Channel');
         Channel.mockImplementation(() => {
             return {
                 queue: [],
@@ -37,6 +34,6 @@ describe('Producer', () => {
         // Act
         producer.publish(message);
         // Assert
-        expect(channel.queue[0]).toBe(message);
+        expect(channel.queue[0].toString()).toBe(message);
     });
 });

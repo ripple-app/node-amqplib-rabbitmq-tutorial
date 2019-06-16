@@ -2,11 +2,13 @@
     "apps": [
         {
             "name": "producer",
-            "script": "./index.js"
+            "script": "npm --start-producer",
+            "watch": false
         },
         {
             "name": "consumer",
-            "script": "./src/consumer.js"
+            "script": "npm --start-consumer",
+            "watch": false
         }
     ]
 }

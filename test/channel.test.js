@@ -1,11 +1,11 @@
-import { Channel } from '../src/app2/Channel';
+import { Channel } from '../src/Channel';
 
 describe('Channel', () => {
     let channel;
 
     beforeEach(() => {
-        jest.mock('../src/app2/Connection');
-        const {Connection} = require('../src/app2/Connection');
+        jest.mock('../src/Connection');
+        const {Connection} = require('../src/Connection');
         Connection.mockImplementation((pt) => {
             return {
                 connect: () => {
@@ -15,6 +15,14 @@ describe('Channel', () => {
                     return Promise.resolve({
                         sendToQueue: (q, buf) => {
                             console.log(buf);
+                        },
+                        consume: (q, fn) => {
+                            fn({
+                                content: JSON.stringify({'say': 'hi'})
+                            });
+                        },
+                        ack: (m) => {
+
                         }
                     });
                 },
@@ -45,5 +53,16 @@ describe('Channel', () => {
         channel.sendToQueue(message);
         // Assert
         expect(spy).toHaveBeenCalled();
+    });
+
+    test('consume_ConsumeMessageInMessageQueue_BindQueueNameToCallbackFunction', () => {
+        // Arrange
+        const cb = jest.fn((msg) => {
+            console.log(msg);
+        });
+        // Act
+        channel.consume(cb);
+        // Assert
+        expect(cb).toHaveBeenCalled();
     });
 });

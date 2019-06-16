@@ -1,7 +1,6 @@
 import amqp from 'amqplib';
 
 export class Protocol {
-    
 }
 
 export class AMQP {

@@ -4,14 +4,19 @@ export class Channel {
         (async () => {
             const conn = await connection.connect();
             const ch = await connection.createChannel(conn);
-            const assert = await connection.channelAssertQueue(ch, queueName);
+            await connection.channelAssertQueue(ch, queueName);
             this.channel = ch;
         })();
     }
 
     sendToQueue(buffer) {
-        if (this.channel) {
-            this.channel.sendToQueue(this.queueName, buffer);
-        }
+        this.channel.sendToQueue(this.queueName, buffer);
+    }
+
+    consume(cb) {
+        this.channel.consume(this.queueName, (message) => {
+            cb(message.content.toString());
+            this.channel.ack(message);
+        });
     }
 }
