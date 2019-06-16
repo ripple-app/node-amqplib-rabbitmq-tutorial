@@ -1,6 +1,6 @@
 {
-    "user": "node",
-    "password": "node",
-    "host": "192.168.122.129",
-    "port": "5672"
+    "user": "",
+    "password": "",
+    "host": "",
+    "port": ""
 }
